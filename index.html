@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#18211f" />
+    <meta name="description" content="Checklist de mantenimiento para las salas Tao, Roomions y Velatoria." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Escape Rooms" />
+    <title>Mantenimiento Escape Rooms</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Mantenimiento</p>
+          <h1>Escape Rooms</h1>
+        </div>
+        <button class="icon-button" id="bossModeBtn" type="button" aria-label="Vista jefe" title="Vista jefe">
+          <span aria-hidden="true">◎</span>
+        </button>
+      </header>
+
+      <section class="stats-panel" aria-label="Resumen global">
+        <div>
+          <span>Progreso global</span>
+          <strong id="globalProgress">0%</strong>
+        </div>
+        <div>
+          <span>Incidencias</span>
+          <strong id="globalIssues">0</strong>
+        </div>
+        <div>
+          <span>Revisados</span>
+          <strong id="globalReviewed">0/0</strong>
+        </div>
+      </section>
+
+      <section class="review-panel" aria-label="Datos de la revisión">
+        <label>
+          <span>Fecha de revisión</span>
+          <input id="reviewDate" type="date" />
+        </label>
+        <label>
+          <span>Tipo de revisión</span>
+          <select id="reviewType">
+            <option value="daily">Revisión diaria</option>
+            <option value="weekly">Revisión semanal</option>
+            <option value="fault">Avería detectada</option>
+          </select>
+        </label>
+        <label>
+          <span>GM / Revisor</span>
+          <input id="reviewerName" type="text" placeholder="Nombre del GM" autocomplete="name" />
+        </label>
+      </section>
+
+      <nav class="room-tabs" aria-label="Salas">
+        <button class="tab is-active" type="button" data-room="tao">Tao</button>
+        <button class="tab" type="button" data-room="roomions">Roomions</button>
+        <button class="tab" type="button" data-room="velatoria">Velatoria</button>
+      </nav>
+
+      <section class="room-header">
+        <div>
+          <p class="eyebrow">Sala activa</p>
+          <h2 id="roomTitle">Tao</h2>
+        </div>
+        <p class="progress-pill" id="roomProgress">0/0</p>
+      </section>
+
+      <section class="legend" aria-label="Leyenda">
+        <span><i class="dot dot-ok"></i> Correcto</span>
+        <span><i class="dot dot-bad"></i> Revisar</span>
+        <span><i class="dot dot-na"></i> No aplica</span>
+      </section>
+
+      <section class="checklist" id="checklist" aria-label="Checklist de mantenimiento"></section>
+
+      <section class="notes-panel">
+        <label>
+          <span>Notas de la sala</span>
+          <textarea id="roomNotes" rows="4" placeholder="Anota incidencias, piezas pendientes o avisos para el jefe."></textarea>
+        </label>
+      </section>
+
+      <footer class="action-bar">
+        <button class="secondary" id="resetRoomBtn" type="button">Limpiar sala</button>
+        <button class="secondary" id="saveReviewBtn" type="button">Guardar</button>
+        <button class="primary" id="exportBtn" type="button">Exportar</button>
+      </footer>
+    </main>
+
+    <dialog id="exportDialog">
+      <form method="dialog" class="dialog-card">
+        <div class="dialog-head">
+          <h3>Exportar checklist</h3>
+          <button class="icon-button" value="close" aria-label="Cerrar" title="Cerrar">×</button>
+        </div>
+        <p>Se genera un resumen listo para enviar al jefe por WhatsApp, email o copiarlo donde quieras.</p>
+        <textarea id="exportText" rows="12" readonly></textarea>
+        <div class="dialog-actions">
+          <button id="copyExportBtn" class="secondary" type="button">Copiar</button>
+          <button id="shareExportBtn" class="primary" type="button">Enviar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="bossDialog">
+      <form method="dialog" class="dialog-card">
+        <div class="dialog-head">
+          <h3>Vista jefe</h3>
+          <button class="icon-button" value="close" aria-label="Cerrar" title="Cerrar">×</button>
+        </div>
+        <div id="bossLogin" class="boss-login">
+          <label>
+            <span>Clave de jefe</span>
+            <input id="bossPassword" type="password" placeholder="1234" />
+          </label>
+          <button id="bossLoginBtn" class="primary" type="button">Entrar</button>
+        </div>
+        <div id="bossSummary" class="boss-summary" hidden></div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
